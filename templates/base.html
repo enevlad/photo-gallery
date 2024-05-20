@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Photo Gallery</title>
+</head>
+<body>
+    <nav>
+        <a href="{% block home %} {%endblock%}">Home</a>
+        {% if session.get('logged_in') %}
+            <a href="{% block upload %} {%endblock%}">Upload</a>
+            <a href="{% block logout %} {%endblock%}">Logout</a>
+        {% else %}
+            <a href="{% block login %} {%endblock%}">Login</a>
+        {% endif %}
+        <a href="{% block about %} {%endblock%}">About Me</a>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

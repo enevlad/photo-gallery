@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block home %}
+    /
+{%endblock%}
+
+{% block logout %}
+    logout
+{%endblock%}
+
+{% block about %}
+    about
+{%endblock%}
+
+{% block content %}
+<h1>Upload Photo</h1>
+<form method="post" enctype="multipart/form-data">
+    <label for="image">Select image:</label>
+    <input type="file" id="image" name="image" accept="image/*" required>
+    <label for="category">Category:</label>
+    <input type="text" id="category" name="category">
+    <button type="submit">Upload</button>
+</form>
+{% endblock %}
