@@ -27,7 +27,7 @@
     <div class="gallery">
         {% for photo in photos %}
             <a href="{{ url_for('static', filename='uploads/' ~ category ~ '/' ~ photo) }}">
-                <img src="{{ url_for('static', filename='uploads/' ~ category ~ '/' ~ photo.rsplit('.', 1)[0] ~ '.thumb.' ~ photo.rsplit('.', 1)[1]) }}" alt="{{ photo }}">
+                <img src="{{ url_for('static', filename='uploads/' ~ category ~ '/' ~ photo.rsplit('.', 1)[0] ~ '.' ~ photo.rsplit('.', 1)[1]) }}" class = "img-thumbnail img-fluid" alt="{{ photo }}">
             </a>
         {% endfor %}
     </div>

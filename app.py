@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = 'supersecretkey'  # For session management
 
 # Configuration for file uploads
-UPLOAD_FOLDER = './static/uploads'
+UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -61,11 +61,18 @@ def upload():
             category = request.form.get('category', 'uncategorized')
             category_path = os.path.join(app.config['UPLOAD_FOLDER'], category)
             os.makedirs(category_path, exist_ok=True)
-            file_path = os.path.join(category_path, filename)
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], category, filename)
             file.save(file_path)
-            create_thumbnail(file_path)
-            flash('File successfully uploaded')
+            try:
+                create_thumbnail(file_path)
+                flash('File successfully uploaded')
+            except Exception as e:
+                flash(f'Failed to process image: {str(e)}')
+                os.remove(file_path) 
+
             return redirect(url_for('upload'))
+        else:
+            flash('Invalid file type')
     return render_template('upload.html')
 
 @app.route('/about')
@@ -73,10 +80,16 @@ def about():
     return render_template('about.html')
 
 def create_thumbnail(image_path):
-    with Image.open(image_path) as img:
-        img.thumbnail((200, 200))
-        thumbnail_path = f"{os.path.splitext(image_path)[0]}.thumb{os.path.splitext(image_path)[1]}"
-        img.save(thumbnail_path)
+    thumbnail_size = (200, 200)
+    try:
+        with Image.open(image_path) as img:
+            img.thumbnail(thumbnail_size)
+            base, ext = os.path.splitext(image_path)
+            thumbnail_path = f"{base}{ext}"
+            img.save(thumbnail_path)
+    except Exception as e:
+        raise ValueError(f"Cannot process image file {image_path}. Error: {str(e)}")
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

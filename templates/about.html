@@ -19,4 +19,14 @@
 {% block content %}
 <h1>About Me</h1>
 <p>This is a simple photo gallery application built with Flask.</p>
+<div class="spinner">
+    <img src="static/images/pedro.png" alt="Pedro">
+    <audio autoplay loop=true id="pedro-audio" >
+        <source src="static/audios/pedro-pe.mp3">
+    </audio>
+    <script>
+        var audio = document.getElementById("pedro-audio");
+        audio.volume = 0.5;
+    </script>
+</div>
 {% endblock %}

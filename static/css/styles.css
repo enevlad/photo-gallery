@@ -30,8 +30,54 @@ nav a {
     margin: 0.5rem;
 }
 
-.gallery img {
+.flash-messages {
+    margin-top: 20px;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.spinner {
+    background-color: #f5dad8;
+    border-radius: 50%;
+    overflow: hidden;
     width: 200px;
-    height: 200px;
-    object-fit: cover;
+    aspect-ratio: 1;
+    animation: rotate 6s linear infinite;
+}
+.spinner img {
+    display: block;
+    width: 100%;
+
+    animation: bounce .5s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(-5%);
+    }
+
+    to {
+        transform: translateY(10%);
+    }
 }
