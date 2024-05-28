@@ -15,10 +15,14 @@
 {% block content %}
 <h1>Upload Photo</h1>
 <form method="post" enctype="multipart/form-data">
-    <label for="image">Select image:</label>
-    <input type="file" id="image" name="image" accept="image/*" required>
-    <label for="category">Category:</label>
-    <input type="text" id="category" name="category">
-    <button type="submit">Upload</button>
+    <div id="container-up">
+        <label for="image">Select image:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+        <label for="name">Photo name:</label>
+        <input type="text" id="photo-name" name="photo-name">
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category">
+        <button class="btn btn-dark" type="submit">Upload</button>
+    </div>
 </form>
 {% endblock %}

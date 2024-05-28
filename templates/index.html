@@ -21,14 +21,15 @@
 {%endblock%}
 
 {% block content %}
-<h1>Photo Gallery</h1>
 {% for category, photos in images.items() %}
     <h2>{{ category }}</h2>
     <div class="gallery">
         {% for photo in photos %}
+            {% if not photo.endswith('.thumb.jpg') and not photo.endswith('.thumb.jpeg') and not photo.endswith('.thumb.png') %}
             <a href="{{ url_for('static', filename='uploads/' ~ category ~ '/' ~ photo) }}">
-                <img src="{{ url_for('static', filename='uploads/' ~ category ~ '/' ~ photo.rsplit('.', 1)[0] ~ '.' ~ photo.rsplit('.', 1)[1]) }}" class = "img-thumbnail img-fluid" alt="{{ photo }}">
+                <img src="{{ url_for('static', filename='uploads/' ~ category ~ '/' ~ photo.rsplit('.')[0] ~ '.thumb.' ~ photo.rsplit('.')[-1]) }}" class="img-thumbnail img-fluid">
             </a>
+            {% endif %}
         {% endfor %}
     </div>
 {% endfor %}

@@ -8,7 +8,7 @@ app.secret_key = 'supersecretkey'  # For session management
 
 # Configuration for file uploads
 UPLOAD_FOLDER = 'static/uploads'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Ensure the upload folder exists
@@ -58,9 +58,15 @@ def upload():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
+            photo_name = request.form.get('photo-name', '').strip()
             category = request.form.get('category', 'uncategorized')
             category_path = os.path.join(app.config['UPLOAD_FOLDER'], category)
             os.makedirs(category_path, exist_ok=True)
+            if photo_name:
+                extension = file.filename.rsplit('.', 1)[1].lower()
+                filename = f"{secure_filename(photo_name)}.{extension}"
+            else:
+                filename = secure_filename(file.filename)
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], category, filename)
             file.save(file_path)
             try:
@@ -85,7 +91,7 @@ def create_thumbnail(image_path):
         with Image.open(image_path) as img:
             img.thumbnail(thumbnail_size)
             base, ext = os.path.splitext(image_path)
-            thumbnail_path = f"{base}{ext}"
+            thumbnail_path = f"{base}.thumb{ext}"
             img.save(thumbnail_path)
     except Exception as e:
         raise ValueError(f"Cannot process image file {image_path}. Error: {str(e)}")

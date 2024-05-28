@@ -5,19 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link href="{{ url_for('static', filename='bootstrap-5.3.3-dist/css/bootstrap.css') }}" rel="stylesheet">
+    <script src="static/bootstrap-5.3.3-dist/js/bootstrap.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <title>Photo Gallery</title>
 </head>
 <body>
-    <nav>
-        <a href="{% block home %} {%endblock%}">Home</a>
-        {% if session.get('logged_in') %}
-            <a href="{% block upload %} {%endblock%}">Upload</a>
-            <a href="{% block logout %} {%endblock%}">Logout</a>
-        {% else %}
-            <a href="{% block login %} {%endblock%}">Login</a>
-        {% endif %}
-        <a href="{% block about %} {%endblock%}">About Me</a>
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand">Photo Gallery</a>
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Photo Gallery</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% block home %} {%endblock%}">Home</a>
+                        </li>
+                        {% if session.get('logged_in') %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% block upload %} {%endblock%}">Upload</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% block logout %} {%endblock%}">Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% block login %} {%endblock%}">Login</a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% block about %} {%endblock%}">About Me</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </nav>
     <div class="container">
         {% with messages = get_flashed_messages() %}
