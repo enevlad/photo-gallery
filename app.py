@@ -4,7 +4,7 @@ from PIL import Image
 import os
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'  # For session management
+app.secret_key = 'supersecretkey'
 
 # Configuration for file uploads
 UPLOAD_FOLDER = 'static/uploads'
